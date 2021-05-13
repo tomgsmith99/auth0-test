@@ -1,0 +1,89 @@
+<html>
+
+<head>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+	<script>
+		window.onload = function() {
+
+			const url = new URL(window.location)
+
+				if (url.hash != '') {
+
+				let arr = url.hash.split("#")
+
+				const hash_string = arr[1]
+
+				const kvps = hash_string.split("&")
+
+				for (kvp of kvps) {
+
+					arr = kvp.split("=")
+
+					key = arr[0]
+
+					value = arr[1]
+
+					if (key == "id_token") {
+						const id_token = value
+						console.log("id_token")
+						console.log(id_token)
+					}
+					else if (key == "code") {
+						const code = value
+						console.log("code")
+						console.log(code)
+					}
+				}
+			}
+		}
+
+		function log_out() {
+			window.location.href = "{{{auth0_tenant}}}/v2/logout?client_id={{client_id}}&returnTo={{{logout_url}}}"
+		}
+
+		function evaluate_registration() {
+
+		}
+	</script>
+
+	<script type="text/javascript">
+
+		function evaluate_registration() {
+			// alert("hello")
+
+			const email = $("#email").val()
+			const password = $("#password").val()
+
+			user = {
+				email: email,
+				password: password
+			}
+
+			console.log(password)
+
+			$.post( "/register", user)
+			.done(function( data ) {
+				alert( "Data Loaded: " + data )
+			})
+		}
+
+	</script>
+
+</head>
+
+<body>
+
+<p>Auth0 test harness</p>
+
+
+{{#registration}}
+
+	{{>registration}}
+
+{{/registration}}
+
+</body>
+
+</html>

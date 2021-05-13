@@ -1,0 +1,74 @@
+<html>
+
+<head>
+
+	<script>
+		window.onload = function() {
+
+			const url = new URL(window.location)
+
+				if (url.hash != '') {
+
+				let arr = url.hash.split("#")
+
+				const hash_string = arr[1]
+
+				const kvps = hash_string.split("&")
+
+				for (kvp of kvps) {
+
+					arr = kvp.split("=")
+
+					key = arr[0]
+
+					value = arr[1]
+
+					if (key == "id_token") {
+						const id_token = value
+						console.log("id_token")
+						console.log(id_token)
+					}
+					else if (key == "code") {
+						const code = value
+						console.log("code")
+						console.log(code)
+					}
+				}
+			}
+		}
+
+		function log_out() {
+			window.location.href = "{{{auth0_tenant}}}/v2/logout?client_id={{client_id}}&returnTo={{{logout_url}}}"
+		}
+
+		function evaluate_registration() {
+
+			
+
+		}
+
+	</script>
+
+</head>
+
+<body>
+
+<p>Auth0 test harness</p>
+
+<p>
+<a href = "{{{auth0_tenant}}}/authorize?client_id={{client_id}}&scope=openid&redirect_uri={{{redirect_uri}}}&response_type=id_token&nonce=somenonce">implicit flow: get an id token in the address bar (hash)</a>
+</p>
+
+<p>
+<a href = "{{{auth0_tenant}}}/authorize?client_id={{client_id}}&scope=openid&redirect_uri={{{redirect_uri}}}&response_type=code&nonce=somenonce&state=somestate">code flow: get an authz code in the address bar</a>
+</p>
+
+<p id = "logout_button">
+	<button onclick="log_out()">log out</button>
+</p>
+
+<p id='id_token' style="display: none"></p>
+
+</body>
+
+</html>
